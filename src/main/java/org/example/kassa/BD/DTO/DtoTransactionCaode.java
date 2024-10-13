@@ -1,6 +1,8 @@
 package org.example.kassa.BD.DTO;
 
+import jakarta.transaction.Transactional;
 import lombok.Getter;
+import org.example.kassa.BD.Model.Translation;
 import org.example.kassa.Enum.StatusTransaction;
 
 import java.util.UUID;

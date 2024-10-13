@@ -28,29 +28,50 @@ public class TransactionService {
     private final TranslationRepository translationRepository;
 
 
-    public DtoTransactionCaode getById(Long transactionCode) {
-        Translation translation = translationRepository.findByTransactionsCode(transactionCode);
+    public DtoTransactionCaode getById(String transactionCode) {
         if (transactionCode == null) {
             return new DtoTransactionCaode(StatusTransaction.TRANSACTION_NOT_FOUNT);
         }
+        Long transactionId = Long.valueOf(transactionCode);
+        Translation translation = getTranslationByCode(transactionId);
+        if (translation == null) {
+            return new DtoTransactionCaode(StatusTransaction.TRANSACTION_NOT_FOUNT);
+        }
+        return processTranslation(translation);
+    }
+
+    private Translation getTranslationByCode(Long transactionCode) {
+        return translationRepository.findByTransactionsCode(transactionCode);
+    }
+
+    private DtoTransactionCaode processTranslation(Translation translation) {
         if (translation.getStatus().equals(TranslationStatus.CREATED)) {
-            translation.setTargetKassa(kassaRepository.findById(2L).orElse(null));
-            translation.setStatus(TranslationStatus.COMPLETED);
-            BigDecimal balanceTargetKassa = kassaRepository.findById(2L).get().getBalance().subtract(translation.getAmount());
-            kassaRepository.updateBalance(2L, balanceTargetKassa);
-            translationRepository.save(translation);
-            return new DtoTransactionCaode(StatusTransaction.PAYMENT_SUCCESSFUL, transactionCode);
-        }else {
+            completeTransaction(translation);
+            return new DtoTransactionCaode(StatusTransaction.PAYMENT_SUCCESSFUL, translation.getTransactionsCode());
+        } else {
             return new DtoTransactionCaode(StatusTransaction.TRANSACTION_CLOSED);
         }
     }
 
-    public Translation save(TrnsactionDto transactionDto) {
+    private void completeTransaction(Translation translation) {
+        Kassa targetKassa = kassaRepository.findById(2L).orElse(null);
+        translation.setTargetKassa(targetKassa);
+        translation.setStatus(TranslationStatus.COMPLETED);
+
+        BigDecimal balanceTargetKassa = targetKassa.getBalance().subtract(translation.getAmount());
+        kassaRepository.updateBalance(2L, balanceTargetKassa);
+
+        translationRepository.save(translation);
+    }
+
+
+    public DtoTransactionCaode save(TrnsactionDto transactionDto) {
         Translation translation = new Translation(transactionDto);
         translation.setSourceKassa(kassaRepository.findById(1L).orElse(null));
         BigDecimal balanceTargetKassa = kassaRepository.findById(1L).get().getBalance().add(translation.getAmount());
         kassaRepository.updateBalance(1L,balanceTargetKassa);
-        return  translationRepository.save(translation);
+        translationRepository.save(translation);
+        return new DtoTransactionCaode(StatusTransaction.TRANSACTION_SUCCESSFUL, translation.getTransactionsCode());
 
     }
 
