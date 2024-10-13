@@ -28,7 +28,7 @@ public class TransactionService {
     private final TranslationRepository translationRepository;
 
 
-    public DtoTransactionCaode getById(UUID transactionCode) {
+    public DtoTransactionCaode getById(Long transactionCode) {
         Translation translation = translationRepository.findByTransactionsCode(transactionCode);
         if (transactionCode == null) {
             return new DtoTransactionCaode(StatusTransaction.TRANSACTION_NOT_FOUNT);
@@ -49,9 +49,5 @@ public class TransactionService {
         return  translationRepository.save(translation);
 
     }
-
-
-
-
 
 }

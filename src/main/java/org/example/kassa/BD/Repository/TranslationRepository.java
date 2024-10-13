@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 @Repository
 public interface TranslationRepository extends JpaRepository<Translation, Long> {
-    Translation findByTransactionsCode(UUID id);
+    Translation findByTransactionsCode(Long id);
 }

@@ -13,6 +13,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Random;
 import java.util.UUID;
 
 @Data
@@ -45,7 +46,7 @@ public class Translation {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
     @Column(name = "transactions_code")
-    private UUID transactionsCode;
+    private Long transactionsCode;
 
     @ManyToOne
     @JoinColumn(name = "source_kassa_id", nullable = false)
@@ -63,9 +64,9 @@ public class Translation {
         this.targetNumber = trnsactionDto.getTargetNumber();
         this.description = trnsactionDto.getDescription();
         this.status = TranslationStatus.CREATED;
-        this.transactionsCode = UUID.randomUUID();
         this.senderName = trnsactionDto.getSenderName();
         this.receiverName = trnsactionDto.getReceiverName();
+        this.transactionsCode = generation();
 
 
     }
@@ -74,5 +75,8 @@ public class Translation {
     }
     public Translation() {}
 
-
+    public Long generation(){
+        Random random = new Random();
+        return random.nextLong(100000,999999);
+    }
 }
