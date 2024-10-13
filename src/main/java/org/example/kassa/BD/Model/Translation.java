@@ -67,6 +67,8 @@ public class Translation {
         this.senderName = trnsactionDto.getSenderName();
         this.receiverName = trnsactionDto.getReceiverName();
         this.transactionsCode = generation();
+        this.targetKassa = trnsactionDto.getTargetKassa();
+        this.sourceKassa = trnsactionDto.getSourceKassa();
 
 
     }

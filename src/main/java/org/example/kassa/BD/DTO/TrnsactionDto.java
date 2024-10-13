@@ -1,9 +1,8 @@
 package org.example.kassa.BD.DTO;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import lombok.Getter;
+import org.example.kassa.BD.Model.Kassa;
 import org.example.kassa.Enum.Curr;
 
 import java.math.BigDecimal;
@@ -21,4 +20,12 @@ public class TrnsactionDto {
     private Long soursNumber;
     private Long targetNumber;
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "source_kassa_id", nullable = false)
+    private Kassa sourceKassa;
+
+    @ManyToOne
+    @JoinColumn(name = "target_kassa_id")
+    private Kassa targetKassa;
 }

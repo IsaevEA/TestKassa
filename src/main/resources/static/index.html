@@ -1,166 +1,166 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Касса</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Kassa Transaction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-    <h1 class="text-center mt-4">Выберите роль</h1>
-    <div class="text-center">
-        <button class="btn btn-primary" onclick="selectRole('client')">Я клиент</button>
-        <button class="btn btn-secondary" onclick="selectRole('cashier')">Я кассир</button>
-    </div>
-    <div id="role-selection" class="d-none">
-        <h2 class="text-center mt-4">Выберите кассу</h2>
-        <select id="kassaSelect" class="form-control" onchange="selectKassa()">
-            <option value="">Выберите кассу</option>
-            <option value="1">Касса 1</option>
-            <option value="2">Касса 2</option>
-            <option value="3">Касса 3</option>
-            <option value="4">Касса 4</option>
-        </select>
-        <div id="actionButtons" class="mt-4 d-none">
-            <button class="btn btn-success" onclick="sendTransfer()">Отправить перевод</button>
-            <button class="btn btn-info" onclick="receiveTransfer()">Получить перевод</button>
-        </div>
-    </div>
 
-    <!-- Form for sending transfer -->
-    <div id="sendTransferForm" class="d-none">
-        <h2 class="text-center mt-4">Отправить перевод</h2>
-        <form id="transferForm">
-            <div class="form-group">
-                <label for="senderNumber">Номер отправителя</label>
-                <input type="text" id="senderNumber" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="recipientNumber">Номер получателя</label>
-                <input type="text" id="recipientNumber" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="senderName">ФИО отправителя</label>
-                <input type="text" id="senderName" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="recipientName">ФИО получателя</label>
-                <input type="text" id="recipientName" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="amount">Сумма</label>
-                <input type="number" id="amount" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="description">Описание</label>
-                <textarea id="description" class="form-control" required></textarea>
-            </div>
-            <button type="button" class="btn btn-primary" onclick="submitTransfer()">Отправить</button>
-            <button type="button" class="btn btn-secondary" onclick="goHome()">Домой</button>
-        </form>
-        <div id="transactionCode" class="mt-3"></div>
-    </div>
-
-    <!-- Form for receiving transfer -->
-    <div id="receiveTransferForm" class="d-none">
-        <h2 class="text-center mt-4">Получить перевод</h2>
-        <form id="receiveForm">
-            <div class="form-group">
-                <label for="transactionCodeInput">Код транзакции</label>
-                <input type="text" id="transactionCodeInput" class="form-control" required>
-            </div>
-            <button type="button" class="btn btn-primary" onclick="submitReceive()">Получить</button>
-            <button type="button" class="btn btn-secondary" onclick="goHome()">Домой</button>
-        </form>
-        <div id="receiveResult" class="mt-3"></div>
-    </div>
+<!-- Роль -->
+<div id="roleSelection">
+    <h1>Выберите роль</h1>
+    <button class="btn btn-primary" onclick="selectRole('client')">Я клиент</button>
+    <button class="btn btn-secondary" onclick="selectRole('cashier')">Я сотрудник банка</button>
 </div>
 
+<!-- Выбор кассы -->
+<div id="kassaSelection" style="display: none;">
+    <h1>Выберите кассу</h1>
+    <button class="btn btn-primary" onclick="selectKassa(1)">Касса 1</button>
+    <button class="btn btn-primary" onclick="selectKassa(2)">Касса 2</button>
+    <button class="btn btn-primary" onclick="selectKassa(3)">Касса 3</button>
+    <button class="btn btn-primary" onclick="selectKassa(4)">Касса 4</button>
+</div>
+
+<!-- Выбор действия -->
+<div id="actionSelection" style="display: none;">
+    <h1>Выберите действие</h1>
+    <button class="btn btn-success" onclick="startTransaction('send')">Отправить перевод</button>
+    <button class="btn btn-info" onclick="startTransaction('receive')">Получить перевод</button>
+</div>
+
+<!-- Отправить перевод -->
+<div id="sendTransaction" style="display: none;">
+    <h1>Отправить перевод</h1>
+    <form id="sendForm">
+        <div class="mb-3">
+            <label for="senderPhone" class="form-label">Номер отправителя</label>
+            <input type="text" class="form-control" id="senderPhone" required>
+        </div>
+        <div class="mb-3">
+            <label for="receiverPhone" class="form-label">Номер получателя</label>
+            <input type="text" class="form-control" id="receiverPhone" required>
+        </div>
+        <div class="mb-3">
+            <label for="senderName" class="form-label">ФИО отправителя</label>
+            <input type="text" class="form-control" id="senderName" required>
+        </div>
+        <div class="mb-3">
+            <label for="receiverName" class="form-label">ФИО получателя</label>
+            <input type="text" class="form-control" id="receiverName" required>
+        </div>
+        <div class="mb-3">
+            <label for="amount" class="form-label">Сумма перевода</label>
+            <input type="number" class="form-control" id="amount" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Описание</label>
+            <textarea class="form-control" id="description" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Отправить перевод</button>
+    </form>
+</div>
+
+<!-- Получить перевод -->
+<div id="receiveTransaction" style="display: none;">
+    <h1>Получить перевод</h1>
+    <form id="receiveForm">
+        <div class="mb-3">
+            <label for="transactionCode" class="form-label">Код транзакции</label>
+            <input type="text" class="form-control" id="transactionCode" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Получить перевод</button>
+    </form>
+</div>
+
+<!-- Скрипты -->
 <script>
-    let selectedKassaId = null;
+    let selectedKassa = null;
 
     function selectRole(role) {
-        document.getElementById('role-selection').classList.remove('d-none');
-        document.getElementById('actionButtons').classList.remove('d-none');
-    }
-
-    function selectKassa() {
-        selectedKassaId = document.getElementById('kassaSelect').value;
-        if (selectedKassaId) {
-            document.getElementById('sendTransferForm').classList.remove('d-none');
-            document.getElementById('receiveTransferForm').classList.remove('d-none');
+        document.getElementById('roleSelection').style.display = 'none';
+        if (role === 'client') {
+            document.getElementById('kassaSelection').style.display = 'block';
+        } else {
+            // Логика для сотрудника банка
         }
     }
 
-    function sendTransfer() {
-        document.getElementById('sendTransferForm').classList.remove('d-none');
-        document.getElementById('receiveTransferForm').classList.add('d-none');
+    function selectKassa(kassaId) {
+        selectedKassa = kassaId;
+        document.getElementById('kassaSelection').style.display = 'none';
+        document.getElementById('actionSelection').style.display = 'block';
     }
 
-    function receiveTransfer() {
-        document.getElementById('receiveTransferForm').classList.remove('d-none');
-        document.getElementById('sendTransferForm').classList.add('d-none');
+    function startTransaction(action) {
+        document.getElementById('actionSelection').style.display = 'none';
+        if (action === 'send') {
+            document.getElementById('sendTransaction').style.display = 'block';
+        } else if (action === 'receive') {
+            document.getElementById('receiveTransaction').style.display = 'block';
+        }
     }
 
-    function goHome() {
-        document.getElementById('role-selection').classList.add('d-none');
-        document.getElementById('sendTransferForm').classList.add('d-none');
-        document.getElementById('receiveTransferForm').classList.add('d-none');
-        document.getElementById('kassaSelect').selectedIndex = 0;
-    }
-
-    function submitTransfer() {
-        const senderNumber = document.getElementById('senderNumber').value;
-        const recipientNumber = document.getElementById('recipientNumber').value;
+    document.getElementById('sendForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const senderPhone = document.getElementById('senderPhone').value;
+        const receiverPhone = document.getElementById('receiverPhone').value;
         const senderName = document.getElementById('senderName').value;
-        const recipientName = document.getElementById('recipientName').value;
+        const receiverName = document.getElementById('receiverName').value;
         const amount = document.getElementById('amount').value;
         const description = document.getElementById('description').value;
 
-        const transferData = {
-            senderNumber,
-            recipientNumber,
-            senderName,
-            recipientName,
-            amount,
-            description,
-            kassaId: selectedKassaId
-        };
-
-        fetch('/api/transactions', {
+        fetch('http://localhost:8080/transactions/send', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(transferData)
+            body: JSON.stringify({
+                senderPhone,
+                receiverPhone,
+                senderName,
+                receiverName,
+                amount,
+                description,
+                kassaId: selectedKassa
+            })
         })
             .then(response => response.json())
             .then(data => {
-                if (data.status === "TRANSACTION_SUCCESSFUL") {
-                    document.getElementById('transactionCode').innerText = `Код транзакции: ${data.transactionCode}`;
-                }
+                alert('Код транзакции: ' + data.transactionCode);
+                window.location.href = '/';
+            })
+            .catch(error => {
+                console.error('Error:', error);
             });
-    }
+    });
 
-    function submitReceive() {
-        const transactionCode = document.getElementById('transactionCodeInput').value;
+    document.getElementById('receiveForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const transactionCode = document.getElementById('transactionCode').value;
 
-        fetch(`/api/transactions/${transactionCode}`, {
-            method: 'GET',
+        fetch('http://localhost:8080/transactions/receive', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ transactionCode })
         })
             .then(response => response.json())
             .then(data => {
-                const resultDiv = document.getElementById('receiveResult');
-                if (data.status === "PAYMENT_SUCCESSFUL") {
-                    resultDiv.innerText = 'Перевод успешно получен.';
-                } else if (data.status === "TRANSACTION_NOT_FOUNT") {
-                    resultDiv.innerText = 'Перевод не найден.';
+                if (data.status === 'PAYMENT_SUCCESSFUL') {
+                    alert('Перевод успешно получен.');
                 } else {
-                    resultDiv.innerText = 'Перевод закрыт.';
+                    alert('Перевод не найден.');
                 }
+            })
+            .catch(error => {
+                console.error('Error:', error);
             });
-    }
+    });
 </script>
+
 </body>
 </html>

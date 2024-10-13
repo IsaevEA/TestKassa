@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("transaction/")
+@CrossOrigin(origins = "http://localhost:63342")
+@RequestMapping("transactions/")
 @Data
 public class TransactionController {
     private final TransactionService transactionService;
