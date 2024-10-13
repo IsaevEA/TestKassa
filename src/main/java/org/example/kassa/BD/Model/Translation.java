@@ -59,7 +59,7 @@ public class Translation {
 
     public Translation(TrnsactionDto trnsactionDto) {
         this.amount = trnsactionDto.getAmount();
-        this.curr = trnsactionDto.getCurr();
+        this.curr = Curr.KGS;
         this.soursNumber = trnsactionDto.getSoursNumber();
         this.targetNumber = trnsactionDto.getTargetNumber();
         this.description = trnsactionDto.getDescription();
@@ -67,8 +67,7 @@ public class Translation {
         this.senderName = trnsactionDto.getSenderName();
         this.receiverName = trnsactionDto.getReceiverName();
         this.transactionsCode = generation();
-        this.targetKassa = trnsactionDto.getTargetKassa();
-        this.sourceKassa = trnsactionDto.getSourceKassa();
+
 
 
     }

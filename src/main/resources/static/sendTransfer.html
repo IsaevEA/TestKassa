@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Отправить перевод</title>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center">Отправить перевод</h1>
+    <form id="sendTransferForm">
+        <div class="form-group">
+            <label for="senderName">ФИО отправителя</label>
+            <input type="text" class="form-control" id="senderName" required>
+        </div>
+        <div class="form-group">
+            <label for="receiverName">ФИО получателя</label>
+            <input type="text" class="form-control" id="receiverName" required>
+        </div>
+        <div class="form-group">
+            <label for="senderPhone">Номер телефона отправителя</label>
+            <input type="tel" class="form-control" id="senderPhone" required>
+        </div>
+        <div class="form-group">
+            <label for="receiverPhone">Номер телефона получателя</label>
+            <input type="tel" class="form-control" id="receiverPhone" required>
+        </div>
+        <div class="form-group">
+            <label for="amount">Сумма (сом)</label>
+            <input type="number" class="form-control" id="amount" required>
+            <small class="form-text text-muted">Все суммы указаны в сомах.</small>
+        </div>
+        <div class="form-group">
+            <label for="description">Описание</label>
+            <textarea class="form-control" id="description" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
+</div>
+<script src="js/sendTransfer.js"></script>
+</body>
+</html>
