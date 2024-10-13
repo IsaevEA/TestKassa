@@ -8,9 +8,9 @@ import java.util.UUID;
 public class DtoTransactionCaode {
     private int code;
     private String message;
-    private UUID transactionsCode;
+    private Long transactionsCode;
 
-    public DtoTransactionCaode( StatusTransaction message, UUID transactionsCode) {
+    public DtoTransactionCaode( StatusTransaction message, Long transactionsCode) {
         this.code = message.getCode();
         this.message = message.getMessage();
         this.transactionsCode = transactionsCode;

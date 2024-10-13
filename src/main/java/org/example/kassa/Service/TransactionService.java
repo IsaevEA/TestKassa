@@ -28,17 +28,21 @@ public class TransactionService {
     private final TranslationRepository translationRepository;
 
 
-    public DtoTransactionCaode getById(UUID transactionCode) {
+    public DtoTransactionCaode getById(Long transactionCode) {
         Translation translation = translationRepository.findByTransactionsCode(transactionCode);
         if (transactionCode == null) {
             return new DtoTransactionCaode(StatusTransaction.TRANSACTION_NOT_FOUNT);
         }
-        translation.setTargetKassa(kassaRepository.findById(2L).orElse(null));
-        translation.setStatus(TranslationStatus.COMPLETED);
-        BigDecimal balanceTargetKassa = kassaRepository.findById(2L).get().getBalance().subtract(translation.getAmount());
-        kassaRepository.updateBalance(2L,balanceTargetKassa);
-        translationRepository.save(translation);
-        return new DtoTransactionCaode(StatusTransaction.PAYMENT_SUCCESSFUL,transactionCode);
+        if (translation.getStatus().equals(TranslationStatus.CREATED)) {
+            translation.setTargetKassa(kassaRepository.findById(2L).orElse(null));
+            translation.setStatus(TranslationStatus.COMPLETED);
+            BigDecimal balanceTargetKassa = kassaRepository.findById(2L).get().getBalance().subtract(translation.getAmount());
+            kassaRepository.updateBalance(2L, balanceTargetKassa);
+            translationRepository.save(translation);
+            return new DtoTransactionCaode(StatusTransaction.PAYMENT_SUCCESSFUL, transactionCode);
+        }else {
+            return new DtoTransactionCaode(StatusTransaction.TRANSACTION_CLOSED);
+        }
     }
 
     public Translation save(TrnsactionDto transactionDto) {
@@ -49,9 +53,5 @@ public class TransactionService {
         return  translationRepository.save(translation);
 
     }
-
-
-
-
 
 }

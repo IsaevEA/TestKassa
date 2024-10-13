@@ -21,11 +21,11 @@ public class TransactionController {
 //        return transactionService.getById(transactionCode).getTransactionsCode();
 //    }
     @PostMapping("/create")
-    public UUID save(@RequestBody TrnsactionDto transaction) {
+    public Long save(@RequestBody TrnsactionDto transaction) {
         return transactionService.save(transaction).getTransactionsCode();
     }
     @GetMapping("/{transactionCode}")
-    public DtoTransactionCaode getById(@PathVariable UUID transactionCode) {
+    public DtoTransactionCaode getById(@PathVariable Long transactionCode) {
         return transactionService.getById(transactionCode);
     }
 
