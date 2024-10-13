@@ -67,12 +67,17 @@ public class TransactionService {
 
     public DtoTransactionCaode save(TrnsactionDto transactionDto) {
         Translation translation = new Translation(transactionDto);
-        translation.setSourceKassa(kassaRepository.findById(1L).orElse(null));
-        BigDecimal balanceTargetKassa = kassaRepository.findById(1L).get().getBalance().add(translation.getAmount());
-        kassaRepository.updateBalance(1L,balanceTargetKassa);
+        Optional<Kassa> optionalKassa = kassaRepository.findById(1L);
+        if (!optionalKassa.isPresent()) {
+            return new DtoTransactionCaode(StatusTransaction.KASSA_NOT_FOUND);
+        }
+        Kassa sourceKassa = optionalKassa.get();
+        translation.setSourceKassa(sourceKassa);
+        BigDecimal balanceTargetKassa = sourceKassa.getBalance().add(translation.getAmount());
+        kassaRepository.updateBalance(1L, balanceTargetKassa);
         translationRepository.save(translation);
         return new DtoTransactionCaode(StatusTransaction.TRANSACTION_SUCCESSFUL, translation.getTransactionsCode());
-
     }
+
 
 }
