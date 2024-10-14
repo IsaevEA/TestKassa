@@ -1,5 +1,6 @@
 package org.example.kassa.BD.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -11,12 +12,11 @@ import java.math.BigDecimal;
 @Getter
 public class TrnsactionDto {
     private BigDecimal amount;
-
-
-
     private String senderName;
     private String receiverName;
     private Long soursNumber;
     private Long targetNumber;
     private String description;
+    @JsonIgnore
+    private Long transactionsCode;
 }

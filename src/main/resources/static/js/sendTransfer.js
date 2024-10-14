@@ -3,21 +3,22 @@ document.getElementById('sendTransferForm').addEventListener('submit', function(
 
     const senderName = document.getElementById('senderName').value;
     const receiverName = document.getElementById('receiverName').value;
-    const senderPhone = document.getElementById('senderPhone').value;
-    const receiverPhone = document.getElementById('receiverPhone').value;
+    const soursNumber = document.getElementById('soursNumber').value;
+    const targetNumber = document.getElementById('targetNumber').value;
     const amount = document.getElementById('amount').value;
     const description = document.getElementById('description').value;
+    const transactionCode = document.getElementById('transactionsCode').value;
 
     const data = {
         senderName,
         receiverName,
-        senderPhone,
-        receiverPhone,
+        soursNumber,
+        targetNumber,
         amount,
         description
     };
 
-    fetch('http://localhost:8080/transactions/create', { // Измененный URL
+    fetch('http://localhost:8080/transactions/create', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -26,7 +27,7 @@ document.getElementById('sendTransferForm').addEventListener('submit', function(
     })
         .then(response => response.json())
         .then(data => {
-            if (data.status === 'TRANSACTION_SUCCESSFUL') {
+            if (data.message === 'TRANSACTION_SUCCESSFUL') {
                 alert('Перевод успешно отправлен! Код транзакции: ' + data.transactionCode);
             } else {
                 alert('Ошибка при отправке перевода.');

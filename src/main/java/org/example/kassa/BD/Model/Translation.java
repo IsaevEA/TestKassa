@@ -2,7 +2,7 @@ package org.example.kassa.BD.Model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.example.kassa.BD.DTO.DtoTransactionCaode;
+import org.example.kassa.BD.DTO.DtoTransactionCode;
 import org.example.kassa.BD.DTO.TrnsactionDto;
 import org.example.kassa.Enum.Curr;
 import org.example.kassa.Enum.TranslationStatus;
@@ -14,7 +14,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Random;
-import java.util.UUID;
 
 @Data
 @Entity
@@ -71,7 +70,7 @@ public class Translation {
 
 
     }
-    public Translation(DtoTransactionCaode dtoTransactionCaode) {
+    public Translation(DtoTransactionCode dtoTransactionCaode) {
         this.transactionsCode = dtoTransactionCaode.getTransactionsCode();
     }
     public Translation() {}

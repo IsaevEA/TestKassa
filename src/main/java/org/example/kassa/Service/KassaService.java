@@ -3,6 +3,7 @@ package org.example.kassa.Service;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import org.example.kassa.BD.DTO.TrnsactionDto;
 import org.example.kassa.BD.Model.Kassa;
 import org.example.kassa.BD.Model.Translation;
 import org.example.kassa.BD.Repository.KassaRepository;
@@ -28,5 +29,16 @@ public class KassaService {
     public List<Translation> getAllTranslations() {
         return kassaRepository.findAllTranslations();
     }
+
+    public List<Translation> findByStatus(String name) {
+       return kassaRepository.findByStatus(name);
+    }
+    public List<Translation> findByAmount(String name) {
+       return kassaRepository.findByAmount(Long.valueOf(name));
+    }
+    public List<Translation> findByCreatedAt(String name){
+       return kassaRepository.findByCreatedAt(name);
+    }
+
 
 }

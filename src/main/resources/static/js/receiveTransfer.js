@@ -1,14 +1,14 @@
 document.getElementById('receiveTransferForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const transactionCode = document.getElementById('transactionCode').value;
+    const transactionsCode = document.getElementById('transactionsCode').value;
 
-    fetch(`http://localhost:8080/api/transactions/receive/${transactionCode}`, {
+    fetch(`http://localhost:8080/transactions/${transactionsCode}`, {
         method: 'GET'
     })
         .then(response => response.json())
         .then(data => {
-            if (data.status === 'TRANSACTION_SUCCESSFUL') {
+            if (data.status === 'CREATED') {
                 alert('Перевод получен!');
             } else {
                 alert('Ошибка при получении перевода. Проверьте код.');
